@@ -1,0 +1,32 @@
+name: Daily EPG Merge
+
+on:
+  schedule:
+    - cron: '0 0 * * *'  # Runs every day at 00:00 UTC
+  workflow_dispatch:      # Allows manual run from Actions tab
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Install Dependencies
+        run: pip install lxml requests
+
+      - name: Run Merge Script
+        run: python merge_epg.py
+
+      - name: Commit and Push Changes
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add merged_epg.xml
+          git commit -m "Update merged EPG [skip ci]" || echo "No changes to commit"
+          git push
