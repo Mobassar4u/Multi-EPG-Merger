@@ -5,11 +5,11 @@ from lxml import etree
 # List your EPG URLs here
 EPG_URLS = [
     "https://www.open-epg.com/files/india1.xml",
-    "https://www.open-epg.com/files/india2.xml"
-    "https://www.open-epg.com/files/india3.xml"
-    "https://www.open-epg.com/files/india4.xml"
-    "https://www.open-epg.com/files/india5.xml"
-    "https://www.open-epg.com/files/india6.xml"
+    "https://www.open-epg.com/files/india2.xml",
+    "https://www.open-epg.com/files/india3.xml",
+    "https://www.open-epg.com/files/india4.xml",
+    "https://www.open-epg.com/files/india5.xml",
+    "https://www.open-epg.com/files/india6.xml",
 ]
 
 def merge_epgs():
