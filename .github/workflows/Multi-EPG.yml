@@ -26,9 +26,12 @@ jobs:
         cd epg_temp
         
         # Download sources
-        wget -qO- "https://epg.pw/xmltv/epg_IN.xml" | gunzip -c > epg01.xml
-        wget -qO- "https://avkb.short.gy/epg.xml.gz" | gunzip -c > epg02.xml
-        wget -qO- "https://avkb.short.gy/tsepg.xml.gz" | gunzip -c > epg03.xml
+        wget -qO- "https://www.open-epg.com/files/india1.xml.gz" | gunzip -c > epg01.xml
+        wget -qO- "https://www.open-epg.com/files/india2.xml.gz" | gunzip -c > epg02.xml
+        wget -qO- "https://www.open-epg.com/files/india3.xml.gz" | gunzip -c > epg03.xml
+        wget -qO- "https://www.open-epg.com/files/india4.xml.gz" | gunzip -c > epg04.xml
+        wget -qO- "https://www.open-epg.com/files/india5.xml.gz" | gunzip -c > epg05.xml
+        wget -qO- "https://www.open-epg.com/files/india6.xml.gz" | gunzip -c > epg06.xml
         # Add more: wget -qO- "URL4" | gunzip -c > epg04.xml
         
         # Merge (later overrides earlier on channel overlaps)
