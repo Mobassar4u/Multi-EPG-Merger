@@ -21,7 +21,7 @@ jobs:
         run: pip install lxml requests
 
       - name: Run Merge Script
-        run: python merge_epg.py
+        run: python EPG-Merger.py
 
       - name: Commit and Push Changes
         run: |
