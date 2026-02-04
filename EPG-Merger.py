@@ -65,10 +65,10 @@ def merge_epgs():
     # Output files
     xml_data = etree.tostring(combined_root, encoding="utf-8", xml_declaration=True, pretty_print=True)
 
-    with open("IN.TV-EPG.xml", "wb") as f:
+    with open("IN-TV.EPG.xml", "wb") as f:
         f.write(xml_data)
     
-    with gzip.open("IN.TV-EPG.xml.gz", "wb") as f:
+    with gzip.open("IN-TV.EPG.xml.gz", "wb") as f:
         f.write(xml_data)
 
     print(f"\nTotal Unique Channels in Merged File: {len(seen_channels)}")
