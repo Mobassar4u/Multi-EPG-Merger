@@ -35,7 +35,7 @@ jobs:
         # Add more: wget -qO- "URL4" | gunzip -c > epg04.xml
         
         # Merge (later overrides earlier on channel overlaps)
-        tv_merge --output merged_raw.xml epg*.xml
+        Multi-EPG-Merger --output merged_raw.xml epg*.xml
         
         # Dedupe: Keep unique channels only (one entry per channel id)
         tv_cat merged_raw.xml | tv_pick --unique-channel > merged_dedupe.xml
