@@ -2,12 +2,14 @@ name: Daily EPG Merge
 
 on:
   schedule:
-    - cron: '0 0 * * *'  # Runs every day at 00:00 UTC
-  workflow_dispatch:      # Allows manual run from Actions tab
+    - cron: '0 0 * * *'
+  workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write  # Crucial for the bot to push changes
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
@@ -27,6 +29,6 @@ jobs:
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
-          git add merged_epg.xml
-          git commit -m "Update merged EPG [skip ci]" || echo "No changes to commit"
+          git add merged_epg.xml merged_epg.xml.gz
+          git commit -m "Update EPG data [skip ci]" || echo "No changes to commit"
           git push
