@@ -14,6 +14,7 @@ EPG_URLS = [
 ]
 
 def merge_epgs():
+    # Create the final root element
     combined_root = etree.Element("tv")
     seen_channels = set()
     seen_programmes = set()
@@ -21,43 +22,54 @@ def merge_epgs():
     for url in EPG_URLS:
         try:
             print(f"Fetching: {url}")
-            response = requests.get(url, timeout=30)
+            response = requests.get(url, timeout=45)
             response.raise_for_status()
             
-            # Use recover=True to handle slightly malformed XML from sources
-            parser = etree.XMLParser(recover=True, remove_blank_text=True)
+            # 1. Use a more aggressive recovery parser for broken XML
+            parser = etree.XMLParser(recover=True, remove_blank_text=True, resolve_entities=False)
             tree = etree.fromstring(response.content, parser=parser)
             
-            # Merge Channels
-            for channel in tree.xpath("//channel"):
+            # 2. Handle Namespaces: Use local-name() to ignore the xmlns prefix
+            # This ensures we find <channel> even if it's <ns:channel> or similar.
+            channels = tree.xpath("//*[local-name()='channel']")
+            programmes = tree.xpath("//*[local-name()='programme']")
+            
+            print(f"  - Found {len(channels)} channels and {len(programmes)} programmes")
+
+            # Merge Channels (Unique by ID)
+            for channel in channels:
                 channel_id = channel.get("id")
                 if channel_id and channel_id not in seen_channels:
+                    # Clean the element of its old namespace to keep the output clean
+                    channel.tag = "channel" 
                     combined_root.append(channel)
                     seen_channels.add(channel_id)
 
-            # Merge Programmes
-            for prog in tree.xpath("//programme"):
-                # Unique ID based on channel and start time
-                prog_id = f"{prog.get('channel')}_{prog.get('start')}"
-                if prog_id not in seen_programmes:
+            # Merge Programmes (Unique by channel + start time)
+            for prog in programmes:
+                ch_id = prog.get("channel")
+                start_time = prog.get("start")
+                # Create a unique key to prevent duplicate shows
+                prog_key = f"{ch_id}_{start_time}"
+                
+                if prog_key not in seen_programmes:
+                    prog.tag = "programme"
                     combined_root.append(prog)
-                    seen_programmes.add(prog_id)
+                    seen_programmes.add(prog_key)
 
         except Exception as e:
             print(f"Error processing {url}: {e}")
 
-    # Prepare final XML data
+    # Final Save
     xml_data = etree.tostring(combined_root, encoding="utf-8", xml_declaration=True, pretty_print=True)
 
-    # 1. Save standard XML
     with open("merged_epg.xml", "wb") as f:
         f.write(xml_data)
     
-    # 2. Save GZIP version
     with gzip.open("merged_epg.xml.gz", "wb") as f:
         f.write(xml_data)
 
-    print(f"Success! Processed {len(seen_channels)} channels.")
+    print(f"Done! Total unique channels: {len(seen_channels)}")
 
 if __name__ == "__main__":
     merge_epgs()
