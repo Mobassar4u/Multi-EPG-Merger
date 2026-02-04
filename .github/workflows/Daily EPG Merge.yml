@@ -2,7 +2,7 @@ name: Daily EPG Merge
 
 on:
   schedule:
-    - cron: '0 3 * * *'  # Runs every day at 00:00 UTC
+    - cron: '0 3 * * *'  # Runs every day at 03:00 UTC
   workflow_dispatch:      # Allows manual run from Actions tab
 
 jobs:
@@ -29,6 +29,6 @@ jobs:
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
-          git add IN-tv.epg.xml IN-tv.epg.xml.gz
+          git add IN.TV-EPG.xml IN.TV-EPG.xml.gz
           git commit -m "Update EPG data" || echo "No changes to commit"
           git push
