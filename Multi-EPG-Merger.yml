@@ -1,0 +1,61 @@
+name: Daily Multi-EPG Merge & Dedupe
+
+on:
+  schedule:
+ #   - cron: '0 2 * * *'  # 2 AM UTC (~7:30 AM IST daily)
+  workflow_dispatch:
+
+jobs:
+  merge:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+    
+    - name: Setup XMLTV tools
+      run: |
+        sudo apt-get update -qq
+        sudo apt-get install -y xmltv xmltv-util wget curl gzip git
+    
+    - name: Download & Merge EPGs
+      run: |
+        # Indian EPG URLs (edit/add as needed)
+        mkdir epg_temp
+        cd epg_temp
+        
+        # Download sources
+        wget -qO- "https://epg.pw/xmltv/epg_IN.xml" | gunzip -c > epg01.xml
+        wget -qO- "https://avkb.short.gy/epg.xml.gz" | gunzip -c > epg02.xml
+        wget -qO- "https://avkb.short.gy/tsepg.xml.gz" | gunzip -c > epg03.xml
+        # Add more: wget -qO- "URL4" | gunzip -c > epg04.xml
+        
+        # Merge (later overrides earlier on channel overlaps)
+        tv_merge --output merged_raw.xml epg*.xml
+        
+        # Dedupe: Keep unique channels only (one entry per channel id)
+        tv_cat merged_raw.xml | tv_pick --unique-channel > merged_dedupe.xml
+        
+        # Gzip output
+        gzip -9 merged_dedupe.xml
+        mv merged_dedupe.xml.gz ../merged_epg.xml.gz
+        
+        cd ..
+        ls -lh merged_epg.xml.gz
+    
+    - name: Commit & Push
+      run: |
+        git config user.name "EPG Bot"
+        git config user.email "bot@github.com"
+        git add merged_epg.xml.gz
+        if ! git diff --staged --quiet; then
+          git commit -m "Daily EPG merge & dedupe [$(date +'%Y-%m-%d')] ($(ls -lh merged_epg.xml.gz | awk '{print $5}'))"
+          git push
+        else
+          echo "No changes"
+        fi
+    
+    - name: Cleanup
+      if: always()
+      run: rm -rf epg_temp *.xml*
