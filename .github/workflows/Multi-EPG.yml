@@ -2,7 +2,7 @@ name: Daily Multi-EPG Merge & Dedupe
 
 on:
   schedule:
-#    - cron: '0 2 * * *'  # 2 AM UTC (~7:30 AM IST daily)
+    - cron: '0 2 * * *'  # 2 AM UTC (~7:30 AM IST daily)
   workflow_dispatch:
 
 jobs:
