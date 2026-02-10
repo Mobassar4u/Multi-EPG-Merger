@@ -1,9 +1,15 @@
 sources:
-  - name: "Primary_Source"
-    url: "https://example.com/source1.xml.gz"
+  - name: "JioTV_High_Quality"
+    url: "https://example.com/jio.xml.gz"
+    active: true
+    priority: 1
+  - name: "TataPlay_Backup"
+    url: "https://example.com/tata.xml.gz"
+    active: true
+    priority: 2
 
 mapping:
-  "StarPlus.in": "Star-Plus" # Rename Source ID to your Unique ID
+  "StarPlus.in": "Star-Plus"
 
 # Channels you want to remove completely from the EPG
 filter:
