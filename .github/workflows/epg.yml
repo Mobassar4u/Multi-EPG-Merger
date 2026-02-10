@@ -2,37 +2,23 @@ name: Update Indian EPG
 
 on:
   schedule:
-    - cron: '0 0 * * *' # Runs every 24 hours
-  workflow_dispatch: # Allows manual run
+    - cron: '0 0 * * *'
+  workflow_dispatch:
 
-# REQUIRED: Gives the Action permission to write to your repo
 permissions:
   contents: write
 
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Set up Python
-        uses: actions/setup-python@v4
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v4
         with:
           python-version: '3.9'
-
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt
-
-      - name: Run EPG Merger
-        run: python main.py
-
-      # NEW STEP: Automatically saves the changes
-      - name: Commit and Push changes
-        uses: stefanzweifel/git-auto-commit-action@v5
+      - run: pip install -r requirements.txt
+      - run: python main.py
+      - uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          commit_message: "Automated EPG Update: $(date)"
-          file_pattern: 'merged_epg.xml epg_cache.json' # Save both files
+          commit_message: "EPG Update: $(date)"
+          file_pattern: 'merged_epg.xml epg_cache.json'
