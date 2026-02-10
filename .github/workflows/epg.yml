@@ -1,25 +1,34 @@
-name: Update EPG
+name: Update Indian EPG
+
 on:
   schedule:
-    - cron: '0 2 * * *' # 2 AM UTC
-  workflow_dispatch:
+    - cron: '0 0 * * *' # Runs daily at midnight
+  workflow_dispatch: # Allows you to run it manually for testing
 
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
         with:
-          python-version: '3.10'
-      - name: Install
-        run: pip install requests pyyaml deep-translator
-      - name: Run
-        run: python merge_epg.py
-      - name: Commit
+          python-version: '3.9'
+
+      - name: Install dependencies
+        run: |
+          pip install requests pyyaml
+
+      - name: Run EPG Merger
+        run: python main.py
+
+      - name: Commit and Push
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git add merged_epg.xml merged_epg.xml.gz epg_cache.json
-          git commit -m "Daily EPG Update" || exit 0
+          git add merged_epg.xml
+          git commit -m "Update EPG: $(date)" || echo "No changes to commit"
           git push
