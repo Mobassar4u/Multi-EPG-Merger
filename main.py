@@ -4,50 +4,17 @@ from io import BytesIO
 from datetime import datetime, timedelta
 from deep_translator import GoogleTranslator
 
-def load_json(path):
-    if os.path.exists(path):
-        try:
-            with open(path, 'r', encoding='utf-8') as f: return json.load(f)
-        except: return {}
-    return {}
-
-def shift_time(ts, off):
-    if not ts or not off: return ts
-    try:
-        fmt = "%Y%m%d%H%M%S"
-        dt = datetime.strptime(ts.split(" ")[0], fmt)
-        h, m = int(off[1:3]), int(off[3:5])
-        delta = timedelta(hours=h, minutes=m)
-        dt = dt + delta if off.startswith('+') else dt - delta
-        return dt.strftime(fmt) + " " + off
-    except: return ts
-
-class EPGTranslator:
-    def __init__(self, cfg, t_list):
-        self.enabled = cfg['translation']['enabled']
-        self.cache_path = cfg['translation']['cache_file']
-        self.t_list = t_list
-        self.cache = load_json(self.cache_path)
-        self.translator = GoogleTranslator(source='auto', target=cfg['translation']['target_lang'])
-
-    def translate(self, text, cid):
-        if not self.enabled or not text or cid not in self.t_list: return text
-        if text in self.cache: return self.cache[text]
-        try:
-            res = self.translator.translate(text)
-            self.cache[text] = res
-            return res
-        except: return text
+# ... [Keep your load_json, shift_time, and EPGTranslator classes as they were] ...
 
 def run():
     cfg = yaml.safe_load(open('config.yml'))
-    # Load user settings from channels.json if it exists
     user = load_json('channels.json')
     trans = EPGTranslator(cfg, user.get('translate_channels', []))
     
     root = ET.Element("tv", {"generator-info-name": "Technical-Karam-Singh"})
     seen_ch, seen_pg, skip = set(), set(), set(user.get('skip_channels', []))
 
+    # Priority-based merging from your config.yml
     for s in sorted(cfg['sources'], key=lambda x: x['priority']):
         if not s['active']: continue
         try:
@@ -71,21 +38,19 @@ def run():
                         root.append(pg); seen_pg.add(f"{cid}:{start}")
         except: continue
 
-    # Save translation cache
     with open(trans.cache_path, 'w', encoding='utf-8') as f: 
         json.dump(trans.cache, f, indent=2)
     
-    # DIRECT TO GZIP SYSTEM (No .xml file created)
+    # --- STORAGE FIX: Direct write to Gzip ---
     tree = ET.ElementTree(root)
     ET.indent(tree)
     with gzip.open('in.tv_epg.xml.gz', 'wb') as f_out:
         tree.write(f_out, encoding='utf-8', xml_declaration=True)
     
-    # OUTPUT FOR GITHUB ACTIONS
     channel_count = len(seen_ch)
     if 'GITHUB_OUTPUT' in os.environ:
         with open(os.environ['GITHUB_OUTPUT'], 'a') as f:
             f.write(f"total={channel_count}\n")
-    print(f"Merge Complete: {channel_count} channels found. Saved directly to .gz")
+    print(f"Merge Complete: {channel_count} channels. Saved directly to .gz")
 
 if __name__ == "__main__": run()
