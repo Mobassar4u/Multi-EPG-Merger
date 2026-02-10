@@ -72,9 +72,15 @@ def run():
     with open(trans.cache_path, 'w', encoding='utf-8') as f: json.dump(trans.cache, f, indent=2)
     tree = ET.ElementTree(root)
     ET.indent(tree); tree.write('merged_epg.xml', encoding='utf-8', xml_declaration=True)
-    with open('merged_epg.xml', 'rb') as f_in, gzip.open('merged_epg.xml.gz', 'wb') as f_out: shutil.copyfileobj(f_in, f_out)
     
+    with open('merged_epg.xml', 'rb') as f_in, gzip.open('merged_epg.xml.gz', 'wb') as f_out: 
+        shutil.copyfileobj(f_in, f_out)
+    
+    # OUTPUT FOR GITHUB ACTIONS
+    channel_count = len(seen_ch)
     if 'GITHUB_OUTPUT' in os.environ:
-        with open(os.environ['GITHUB_OUTPUT'], 'a') as f: f.write(f"total={len(seen_ch)}\n")
+        with open(os.environ['GITHUB_OUTPUT'], 'a') as f:
+            f.write(f"total={channel_count}\n")
+    print(f"Merge Complete: {channel_count} channels found.")
 
 if __name__ == "__main__": run()
