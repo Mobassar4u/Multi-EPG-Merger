@@ -2,9 +2,8 @@ name: EPG Updater
 
 on:
   schedule:
-    # 21:30 UTC is exactly 03:00 AM IST
     - cron: '30 21 * * *'
-  workflow_dispatch: # Allows you to run it manually anytime for testing
+  workflow_dispatch:
 
 permissions:
   contents: write
@@ -23,22 +22,22 @@ jobs:
         run: pip install -r requirements.txt
 
       - name: Run Script
-        id: epg_script  # ID used to reference outputs
+        id: epg_script
         run: python main.py
 
       - name: Commit Changes
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          # This line pulls the 'total' variable from the epg_script step
+          # removed in.tv_epg.xml from here
           commit_message: "EPG Update: ${{ steps.epg_script.outputs.total }} channels"
-          file_pattern: 'in.tv_epg.xml in.tv_epg.xml.gz epg_cache.json'
+          file_pattern: 'in.tv_epg.xml.gz epg_cache.json'
 
       - name: Create Release
         uses: softprops/action-gh-release@v2
         with:
           tag_name: latest
           name: "Latest Indian EPG Update"
-          body: "Total Channels: ${{ steps.epg_script.outputs.total }}\nDate: "
+          body: "Total Channels: ${{ steps.epg_script.outputs.total }}\nUpdated on: ${{ github.event.head_commit.timestamp }}"
           files: in.tv_epg.xml.gz
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
