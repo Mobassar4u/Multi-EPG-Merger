@@ -2,8 +2,9 @@ name: EPG Updater
 
 on:
   schedule:
-    - cron: '0 0 * * *'
-  workflow_dispatch:
+    # 21:30 UTC is exactly 03:00 AM IST
+    - cron: '30 21 * * *'
+  workflow_dispatch: # Allows you to run it manually anytime for testing
 
 permissions:
   contents: write
