@@ -1,4 +1,4 @@
-import requests, gzip, json, yaml, os, shutil
+import requests, gzip, json, yaml, os
 import xml.etree.ElementTree as ET
 from io import BytesIO
 from datetime import datetime, timedelta
@@ -41,8 +41,10 @@ class EPGTranslator:
 
 def run():
     cfg = yaml.safe_load(open('config.yml'))
+    # Load user settings from channels.json if it exists
     user = load_json('channels.json')
     trans = EPGTranslator(cfg, user.get('translate_channels', []))
+    
     root = ET.Element("tv", {"generator-info-name": "Technical-Karam-Singh"})
     seen_ch, seen_pg, skip = set(), set(), set(user.get('skip_channels', []))
 
@@ -69,18 +71,21 @@ def run():
                         root.append(pg); seen_pg.add(f"{cid}:{start}")
         except: continue
 
-    with open(trans.cache_path, 'w', encoding='utf-8') as f: json.dump(trans.cache, f, indent=2)
-    tree = ET.ElementTree(root)
-    ET.indent(tree); tree.write('in.tv_epg.xml', encoding='utf-8', xml_declaration=True)
+    # Save translation cache
+    with open(trans.cache_path, 'w', encoding='utf-8') as f: 
+        json.dump(trans.cache, f, indent=2)
     
-    with open('in.tv_epg.xml', 'rb') as f_in, gzip.open('in.tv_epg.xml.gz', 'wb') as f_out: 
-        shutil.copyfileobj(f_in, f_out)
+    # DIRECT TO GZIP SYSTEM (No .xml file created)
+    tree = ET.ElementTree(root)
+    ET.indent(tree)
+    with gzip.open('in.tv_epg.xml.gz', 'wb') as f_out:
+        tree.write(f_out, encoding='utf-8', xml_declaration=True)
     
     # OUTPUT FOR GITHUB ACTIONS
     channel_count = len(seen_ch)
     if 'GITHUB_OUTPUT' in os.environ:
         with open(os.environ['GITHUB_OUTPUT'], 'a') as f:
             f.write(f"total={channel_count}\n")
-    print(f"Merge Complete: {channel_count} channels found.")
+    print(f"Merge Complete: {channel_count} channels found. Saved directly to .gz")
 
 if __name__ == "__main__": run()
