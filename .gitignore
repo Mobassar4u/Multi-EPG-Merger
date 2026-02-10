@@ -1,12 +1,9 @@
-# Ignore the large uncompressed XML
+# Ignore the bulky raw XML
 in.tv_epg.xml
 
-# Ignore Python cache
+# Allow the compressed version
+!in.tv_epg.xml.gz
+
+# Python cache
 __pycache__/
 *.pyc
-
-# Allow these specific files
-!in.tv_epg.xml.gz
-!epg_cache.json
-!main.py
-!.github/
