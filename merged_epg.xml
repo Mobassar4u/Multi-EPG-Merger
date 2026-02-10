@@ -1,2 +1,309 @@
 <?xml version='1.0' encoding='utf-8'?>
-<tv />
+<tv generator-info-name="Karam-EPG-Merger-v1">
+  <channel id="Colors.in">
+    <display-name>Colors.in</display-name>
+  </channel>
+  <programme start="20260210130000 +0000" stop="20260210133000 +0000" channel="Colors.in">
+    <title>Noyontara</title>
+    <desc>Noyontara S01 E01.</desc>
+  </programme>
+  <programme start="20260210133000 +0000" stop="20260210140000 +0000" channel="Colors.in">
+    <title>Tuu Juliet Jatt Di</title>
+    <desc>Tuu Juliet Jatt Di S01 E02.</desc>
+  </programme>
+  <programme start="20260210140000 +0000" stop="20260210143000 +0000" channel="Colors.in">
+    <title>Mannat Harr Khushi Paane Ki</title>
+    <desc>Mannat, a gifted young chef, dreams big but faces a formidable obstacle: her ruthless employer Aishwarya. Unknown to both, Aishwarya is also Mannats birth mother who abandoned her when she was born.</desc>
+  </programme>
+  <programme start="20260210143000 +0000" stop="20260210150000 +0000" channel="Colors.in">
+    <title>DR. Aarambhi</title>
+    <desc>.</desc>
+  </programme>
+  <programme start="20260210150000 +0000" stop="20260210153000 +0000" channel="Colors.in">
+    <title>Mangal Lakshmi</title>
+    <desc>An eerie silence engulfs the house after Kusum learns about Adits secret affair with Soumya. While Kusum takes a drastic measure to save Mangals married life, Adit tries to attain a middle ground.</desc>
+  </programme>
+  <programme start="20260210153000 +0000" stop="20260210160000 +0000" channel="Colors.in">
+    <title>Mangal Lakshmi - Lakshmi Ka Safar</title>
+    <desc>Mangal Lakshmi - Lakshmi Ka Safar E52.</desc>
+  </programme>
+  <programme start="20260210160000 +0000" stop="20260210163000 +0000" channel="Colors.in">
+    <title>Mahadev And Sons</title>
+    <desc>Mahadev And Sons S01 E02.</desc>
+  </programme>
+  <programme start="20260210163000 +0000" stop="20260210170000 +0000" channel="Colors.in">
+    <title>Seher Hone Ko Hai</title>
+    <desc>Strong-willed Kausar defies societal barriers for her daughter Seher’s big dreams, but will destiny stand by their side?</desc>
+  </programme>
+  <programme start="20260210170000 +0000" stop="20260210193000 +0000" channel="Colors.in">
+    <title>The Fifty</title>
+    <desc>A group of fifty celebrities navigates competitive tasks and alliances under observation.</desc>
+  </programme>
+  <programme start="20260210193000 +0000" stop="20260210203000 +0000" channel="Colors.in">
+    <title>Laughter Chefs Unlimited Entertainment</title>
+    <desc>Colors presents an innovative blend of celebrity personalities, culinary skills, and comedy, all coming together for a delightful entertainment experience.</desc>
+  </programme>
+  <programme start="20260210203000 +0000" stop="20260210214500 +0000" channel="Colors.in">
+    <title>Laughter Chefs Unlimited Entertainment</title>
+    <desc>Colors presents an innovative blend of celebrity personalities, culinary skills, and comedy, all coming together for a delightful entertainment experience.</desc>
+  </programme>
+  <programme start="20260210214500 +0000" stop="20260210235900 +0000" channel="Colors.in">
+    <title>Laughter Chefs Unlimited Entertainment Dobaara</title>
+    <desc>Laughter Chefs Unlimited Entertainment Dobaara</desc>
+  </programme>
+  <programme start="20260209193000 +0000" stop="20260209203000 +0000" channel="Colors.in">
+    <title>Laughter Chefs Unlimited Entertainment</title>
+    <desc>Hilarity ensues when the contestants are tasked with preparing Jalebis with a twist.</desc>
+    <episode-num system="xmltv_ns">0.0.</episode-num>
+  </programme>
+  <programme start="20260209203000 +0000" stop="20260209214500 +0000" channel="Colors.in">
+    <title>Laughter Chefs Unlimited Entertainment</title>
+    <desc>Chef Harpal Singh assigns a new challenging task to the celebrity contestants.</desc>
+    <episode-num system="xmltv_ns">0.1.</episode-num>
+  </programme>
+  <programme start="20260209214500 +0000" stop="20260209224500 +0000" channel="Colors.in">
+    <title>Laughter Chefs Unlimited Entertainment Dobaara</title>
+    <desc>The couples are tasked with preparing crispy three-ringed jalebi to earn the golden star.</desc>
+    <episode-num system="xmltv_ns">0.0.</episode-num>
+  </programme>
+  <programme start="20260209224500 +0000" stop="20260209234500 +0000" channel="Colors.in">
+    <title>Laughter Chefs Unlimited Entertainment Dobaara</title>
+    <desc>Celebrities compete in the kitchen with delicious dishes to win the grand prize.</desc>
+    <episode-num system="xmltv_ns">0.1.</episode-num>
+  </programme>
+  <programme start="20260209234500 +0000" stop="20260210010000 +0000" channel="Colors.in">
+    <title>Laughter Chefs Unlimited Entertainment Dobaara</title>
+    <desc>Contestants compete against each other to cook some delightful desi treats.</desc>
+    <episode-num system="xmltv_ns">0.2.</episode-num>
+  </programme>
+  <programme start="20260210010000 +0000" stop="20260210013000 +0000" channel="Colors.in">
+    <title>Teleslot</title>
+    <desc>The host presents a wide range of products can be bought from the comfort of ones home.</desc>
+  </programme>
+  <programme start="20260210013000 +0000" stop="20260210023000 +0000" channel="Colors.in">
+    <title>Laughter Chefs Unlimited Entertainment Dobaara</title>
+    <desc>The contestants are surprised when they are tasked with baking a cake.</desc>
+    <episode-num system="xmltv_ns">0.3.</episode-num>
+  </programme>
+  <programme start="20260210023000 +0000" stop="20260210034500 +0000" channel="Colors.in">
+    <title>The Fifty</title>
+    <desc>Fifty celebrities navigate competitive tasks and alliances under observation.</desc>
+    <episode-num system="xmltv_ns">0.8.</episode-num>
+  </programme>
+  <programme start="20260210034500 +0000" stop="20260210044500 +0000" channel="Colors.in">
+    <title>Laughter Chefs Unlimited Entertainment</title>
+    <desc>The celebrity contestants receive the challenge of preparing Desi dishes.</desc>
+    <episode-num system="xmltv_ns">0.2.</episode-num>
+  </programme>
+  <programme start="20260210044500 +0000" stop="20260210060000 +0000" channel="Colors.in">
+    <title>Laughter Chefs Unlimited Entertainment</title>
+    <desc>The contestants are surprised when they are tasked with baking a cake.</desc>
+    <episode-num system="xmltv_ns">0.3.</episode-num>
+  </programme>
+  <programme start="20260210060000 +0000" stop="20260210073000 +0000" channel="Colors.in">
+    <title>Laughter Chefs Unlimited Entertainment</title>
+    <desc>Celebrity duos tackle culinary challenges set by a renowned chef.</desc>
+    <episode-num system="xmltv_ns">2.22.</episode-num>
+  </programme>
+  <programme start="20260210073000 +0000" stop="20260210083000 +0000" channel="Colors.in">
+    <title>Naagin</title>
+    <desc>Yamini and the family begin to suspect that Shivanya is the naagin after they find her necklace.</desc>
+    <episode-num system="xmltv_ns">0.20.</episode-num>
+  </programme>
+  <programme start="20260210083000 +0000" stop="20260210123000 +0000" channel="Colors.in">
+    <title>Balika Vadhu - Kacchi Umar Ke Pakke Rishte</title>
+    <desc>Anandi, a child bride, overcomes multiple challenges to become an idol for rural women.</desc>
+  </programme>
+  <programme start="20260210123000 +0000" stop="20260210130000 +0000" channel="Colors.in">
+    <title>Seher Hone Ko Hai</title>
+    <desc>Mahid grapples with doubts about Sehers possible hesitation to marry him.</desc>
+    <episode-num system="xmltv_ns">0.27.</episode-num>
+  </programme>
+  <programme start="20260210180000 +0000" stop="20260210193000 +0000" channel="Colors.in">
+    <title>Laughter Chefs Unlimited Entertainment</title>
+    <desc>The kitchen transforms into a lively arena as rival teams craft Bihari cuisine.</desc>
+    <episode-num system="xmltv_ns">2.6.</episode-num>
+  </programme>
+  <programme start="20260210193300 +0000" stop="20260210205600 +0000" channel="Colors.in">
+    <title>Laughter Chefs Unlimited Entertainment</title>
+    <desc>The celebrity contestants receive the challenge of preparing Desi dishes.</desc>
+    <episode-num system="xmltv_ns">0.2.</episode-num>
+  </programme>
+  <programme start="20260210205600 +0000" stop="20260210221300 +0000" channel="Colors.in">
+    <title>Laughter Chefs Unlimited Entertainment</title>
+    <desc>The contestants are surprised when they are tasked with baking a cake.</desc>
+    <episode-num system="xmltv_ns">0.3.</episode-num>
+  </programme>
+  <programme start="20260210221300 +0000" stop="20260210230000 +0000" channel="Colors.in">
+    <title>Laughter Chefs Unlimited Entertainment Dobaara</title>
+    <desc>Contestants compete against each other to cook some delightful desi treats.</desc>
+    <episode-num system="xmltv_ns">0.2.</episode-num>
+  </programme>
+  <programme start="20260210230000 +0000" stop="20260210233800 +0000" channel="Colors.in">
+    <title>Laughter Chefs Unlimited Entertainment Dobaara</title>
+    <desc>The contestants are surprised when they are tasked with baking a cake.</desc>
+    <episode-num system="xmltv_ns">0.3.</episode-num>
+  </programme>
+  <programme start="20260210233800 +0000" stop="20260211003000 +0000" channel="Colors.in">
+    <title>Laughter Chefs Unlimited Entertainment Dobaara</title>
+    <desc>The contestants must impress the judges with a milk-centric delicacy.</desc>
+    <episode-num system="xmltv_ns">0.4.</episode-num>
+  </programme>
+  <programme start="20260211003000 +0000" stop="20260211010000 +0000" channel="Colors.in">
+    <title>Tuu Juliet Jatt Di</title>
+    <desc>Focused Heer encounters privileged Nawab, sparking an unexpected romance.</desc>
+    <episode-num system="xmltv_ns">0.85.</episode-num>
+  </programme>
+  <programme start="20260211010000 +0000" stop="20260211013000 +0000" channel="Colors.in">
+    <title>Teleslot</title>
+    <desc>The host presents a wide range of products can be bought from the comfort of ones home.</desc>
+  </programme>
+  <programme start="20260211013000 +0000" stop="20260211023000 +0000" channel="Colors.in">
+    <title>Laughter Chefs Unlimited Entertainment Dobaara</title>
+    <desc>The contestants must impress the judges with a milk-centric delicacy.</desc>
+    <episode-num system="xmltv_ns">0.4.</episode-num>
+  </programme>
+  <programme start="20260211023000 +0000" stop="20260211034500 +0000" channel="Colors.in">
+    <title>The Fifty</title>
+    <desc>Fifty celebrities navigate competitive tasks and alliances under observation.</desc>
+    <episode-num system="xmltv_ns">0.9.</episode-num>
+  </programme>
+  <programme start="20260211034500 +0000" stop="20260211044500 +0000" channel="Colors.in">
+    <title>Laughter Chefs Unlimited Entertainment</title>
+    <desc>Harpal Singh Sokhi assigns the contestants to prepare masala milk and ras malai.</desc>
+    <episode-num system="xmltv_ns">0.4.</episode-num>
+  </programme>
+  <programme start="20260211044500 +0000" stop="20260211054500 +0000" channel="Colors.in">
+    <title>Laughter Chefs Unlimited Entertainment</title>
+    <desc>The celebrity contestants are tasked to prepare exotic chocolate balloon bowls.</desc>
+    <episode-num system="xmltv_ns">0.5.</episode-num>
+  </programme>
+  <programme start="20260211054500 +0000" stop="20260211073000 +0000" channel="Colors.in">
+    <title>Laughter Chefs Unlimited Entertainment</title>
+    <desc>Celebrity duos tackle culinary challenges set by a renowned chef.</desc>
+    <episode-num system="xmltv_ns">2.21.</episode-num>
+  </programme>
+  <programme start="20260211073000 +0000" stop="20260211083000 +0000" channel="Colors.in">
+    <title>Naagin</title>
+    <desc>Shivanya and Sesha are invited to a movie premier party where they decide to kill Sailesh.</desc>
+    <episode-num system="xmltv_ns">0.21.</episode-num>
+  </programme>
+  <programme start="20260211083000 +0000" stop="20260211123000 +0000" channel="Colors.in">
+    <title>Balika Vadhu - Kacchi Umar Ke Pakke Rishte</title>
+    <desc>Anandi, a child bride, overcomes multiple challenges to become an idol for rural women.</desc>
+  </programme>
+  <programme start="20260211123000 +0000" stop="20260211130000 +0000" channel="Colors.in">
+    <title>Seher Hone Ko Hai</title>
+    <desc>As Seher goes missing, Safiya and Mahid continue to look for her.</desc>
+    <episode-num system="xmltv_ns">0.28.</episode-num>
+  </programme>
+  <programme start="20260211130000 +0000" stop="20260211133000 +0000" channel="Colors.in">
+    <title>Noyontara</title>
+    <desc>Noyontaras spirit-seeing gift reveals veiled mysteries and family secrets.</desc>
+    <episode-num system="xmltv_ns">0.247.</episode-num>
+  </programme>
+  <programme start="20260211133000 +0000" stop="20260211140000 +0000" channel="Colors.in">
+    <title>Tuu Juliet Jatt Di</title>
+    <desc>Focused Heer encounters privileged Nawab, sparking an unexpected romance.</desc>
+    <episode-num system="xmltv_ns">0.86.</episode-num>
+  </programme>
+  <programme start="20260211140000 +0000" stop="20260211143000 +0000" channel="Colors.in">
+    <title>Mannat Harr Khushi Paane Ki</title>
+    <desc>Chef Mannats dreams clash with her employer, who is her secret birth mother and nemesis.</desc>
+    <episode-num system="xmltv_ns">0.338.</episode-num>
+  </programme>
+  <programme start="20260211143000 +0000" stop="20260211150000 +0000" channel="Colors.in">
+    <title>DR. Aarambhi</title>
+    <desc>Aarambhi, an ex-AIPMT star trapped in chores, fights to revive her forgotten dream.</desc>
+    <episode-num system="xmltv_ns">0.11.</episode-num>
+  </programme>
+  <programme start="20260211150000 +0000" stop="20260211153000 +0000" channel="Colors.in">
+    <title>Mangal Lakshmi</title>
+    <desc>Mangal sets off on a journey to find an ideal match for Lakshmi.</desc>
+    <episode-num system="xmltv_ns">0.670.</episode-num>
+  </programme>
+  <programme start="20260211153000 +0000" stop="20260211160000 +0000" channel="Colors.in">
+    <title>Mangal Lakshmi - Lakshmi Ka Safar</title>
+    <desc>The emotional ups and downs and struggles in Lakshmis life that transform her.</desc>
+    <episode-num system="xmltv_ns">0.298.</episode-num>
+  </programme>
+  <programme start="20260211160000 +0000" stop="20260211163000 +0000" channel="Colors.in">
+    <title>Mahadev and Sons</title>
+    <desc>.</desc>
+    <episode-num system="xmltv_ns">0.27.</episode-num>
+  </programme>
+  <programme start="20260211163000 +0000" stop="20260211170000 +0000" channel="Colors.in">
+    <title>Seher Hone Ko Hai</title>
+    <desc>.</desc>
+    <episode-num system="xmltv_ns">0.51.</episode-num>
+  </programme>
+  <programme start="20260211170000 +0000" stop="20260211180000 +0000" channel="Colors.in">
+    <title>The Fifty</title>
+    <desc>Fifty celebrities navigate competitive tasks and alliances under observation.</desc>
+    <episode-num system="xmltv_ns">0.10.</episode-num>
+  </programme>
+  <programme start="20260211180000 +0000" stop="20260211193000 +0000" channel="Colors.in">
+    <title>Laughter Chefs Unlimited Entertainment</title>
+    <desc>Abhishek and Samarth try making candy floss with a unique technique.</desc>
+    <episode-num system="xmltv_ns">2.7.</episode-num>
+  </programme>
+  <programme start="20260211193000 +0000" stop="20260211203000 +0000" channel="Colors.in">
+    <title>Laughter Chefs Unlimited Entertainment</title>
+    <desc>Harpal Singh Sokhi assigns the contestants to prepare masala milk and ras malai.</desc>
+    <episode-num system="xmltv_ns">0.4.</episode-num>
+  </programme>
+  <programme start="20260211203000 +0000" stop="20260211213000 +0000" channel="Colors.in">
+    <title>Laughter Chefs Unlimited Entertainment</title>
+    <desc>The celebrity contestants are tasked to prepare exotic chocolate balloon bowls.</desc>
+    <episode-num system="xmltv_ns">0.5.</episode-num>
+  </programme>
+  <programme start="20260211213000 +0000" stop="20260211223000 +0000" channel="Colors.in">
+    <title>Laughter Chefs Unlimited Entertainment Dobaara</title>
+    <desc>The contestants must impress the judges with a milk-centric delicacy.</desc>
+    <episode-num system="xmltv_ns">0.4.</episode-num>
+  </programme>
+  <programme start="20260211223000 +0000" stop="20260211233000 +0000" channel="Colors.in">
+    <title>Laughter Chefs Unlimited Entertainment Dobaara</title>
+    <desc>Celebrities compete in the kitchen with delicious dishes to win the grand prize.</desc>
+    <episode-num system="xmltv_ns">0.5.</episode-num>
+  </programme>
+  <programme start="20260211233000 +0000" stop="20260212003000 +0000" channel="Colors.in">
+    <title>Laughter Chefs Unlimited Entertainment Dobaara</title>
+    <desc>Celebrities battle in kitchen, cooking delicious dishes to win grand prize.</desc>
+    <episode-num system="xmltv_ns">0.6.</episode-num>
+  </programme>
+  <programme start="20260212003000 +0000" stop="20260212010000 +0000" channel="Colors.in">
+    <title>Tuu Juliet Jatt Di</title>
+    <desc>Focused Heer encounters privileged Nawab, sparking an unexpected romance.</desc>
+    <episode-num system="xmltv_ns">0.86.</episode-num>
+  </programme>
+  <programme start="20260212010000 +0000" stop="20260212013000 +0000" channel="Colors.in">
+    <title>Teleslot</title>
+    <desc>The host presents a wide range of products can be bought from the comfort of ones home.</desc>
+  </programme>
+  <programme start="20260212013000 +0000" stop="20260212023000 +0000" channel="Colors.in">
+    <title>Laughter Chefs Unlimited Entertainment Dobaara</title>
+    <desc>Celebrities compete in the kitchen with delicious dishes to win the grand prize.</desc>
+    <episode-num system="xmltv_ns">0.5.</episode-num>
+  </programme>
+  <programme start="20260212023000 +0000" stop="20260212034500 +0000" channel="Colors.in">
+    <title>The Fifty</title>
+    <desc>Fifty celebrities navigate competitive tasks and alliances under observation.</desc>
+    <episode-num system="xmltv_ns">0.10.</episode-num>
+  </programme>
+  <programme start="20260212034500 +0000" stop="20260212044500 +0000" channel="Colors.in">
+    <title>Laughter Chefs Unlimited Entertainment</title>
+    <desc>Celebrity contestants are challenged to show creativity through their crafting skills.</desc>
+    <episode-num system="xmltv_ns">0.6.</episode-num>
+  </programme>
+  <programme start="20260212044500 +0000" stop="20260212054500 +0000" channel="Colors.in">
+    <title>Laughter Chefs Unlimited Entertainment</title>
+    <desc>The celebrity contestants must prepare shahi phal barfi, shahi korma, and shahi pulao.</desc>
+    <episode-num system="xmltv_ns">0.7.</episode-num>
+  </programme>
+  <programme start="20260212054500 +0000" stop="20260212073000 +0000" channel="Colors.in">
+    <title>Laughter Chefs Unlimited Entertainment</title>
+    <desc>Celebrity duos tackle culinary challenges set by a renowned chef.</desc>
+    <episode-num system="xmltv_ns">2.20.</episode-num>
+  </programme>
+</tv>
