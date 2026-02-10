@@ -1,43 +1,15 @@
-# EPG Configuration for Indian Channels
 sources:
-  - name: "Open EPG"
+  - name: "Open EPG 3"
     url: "https://www.open-epg.com/files/india3.xml.gz"
     active: true
     priority: 1
-  - name: "Open EPG"
+  - name: "Open EPG 2"
     url: "https://www.open-epg.com/files/india2.xml.gz"
     active: true
     priority: 2
-  - name: "Open EPG"
+  - name: "Open EPG 1"
     url: "https://www.open-epg.com/files/india1.xml.gz"
     active: true
     priority: 3
-  - name: "Open EPG"
-    url: "https://www.open-epg.com/files/india5.xml.gz"
-    active: true
-    priority: 4
-  - name: "Open EPG"
-    url: "https://www.open-epg.com/files/india4.xml.gz"
-    active: true
-    priority: 5
-  - name: "Open EPG"
-    url: "https://www.open-epg.com/files/india6.xml.gz"
-    active: true
-    priority: 6
-
-mapping:
-  "StarPlus.in": "Star-Plus"
-  "Colors.in": "Colors-TV"
-
-# Channels you want to remove completely from the EPG
-filter:
-  - "Adult-Channel-ID"
-  - "Unwanted-ID"
-  - "Shop-TV"
-
-translation:
-  enabled: true
-  target_lang: "en"
-  cache_file: "epg_cache.json"
 
 output_file: "merged_epg.xml"
