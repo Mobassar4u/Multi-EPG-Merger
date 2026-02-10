@@ -13,116 +13,94 @@ def load_config():
         return yaml.safe_load(f)
 
 def load_user_data():
-    with open('channels.json', 'r') as f:
-        return json.load(f)
+    try:
+        if os.path.exists('channels.json'):
+            with open('channels.json', 'r', encoding='utf-8') as f:
+                return json.load(f)
+    except: return {"translate_channels": [], "skip_channels": []}
+    return {"translate_channels": [], "skip_channels": []}
 
 def shift_time(time_str, offset_str):
-    """Adjusts EPG time string (e.g., 20260210180000 +0000) by offset."""
-    if not time_str or not offset_str:
-        return time_str
+    if not time_str or not offset_str: return time_str
     try:
-        # Parse: 20260210180000
         fmt = "%Y%m%d%H%M%S"
-        base_time = time_str.split(" ")[0]
-        dt = datetime.strptime(base_time, fmt)
-        
-        # Parse Offset: +0530 -> 5 hours, 30 mins
-        hours = int(offset_str[1:3])
-        minutes = int(offset_str[3:5])
-        delta = timedelta(hours=hours, minutes=minutes)
-        
-        if offset_str.startswith('+'):
-            dt += delta
-        else:
-            dt -= delta
-            
+        base = time_str.split(" ")[0]
+        dt = datetime.strptime(base, fmt)
+        hours, mins = int(offset_str[1:3]), int(offset_str[3:5])
+        delta = timedelta(hours=hours, minutes=mins)
+        dt = dt + delta if offset_str.startswith('+') else dt - delta
         return dt.strftime(fmt) + " " + offset_str
-    except:
-        return time_str
+    except: return time_str
 
 class EPGTranslator:
-    def __init__(self, config, translate_list):
-        self.enabled = config.get('translation', {}).get('enabled', False)
-        self.target = config.get('translation', {}).get('target_lang', 'en')
-        self.cache_path = config.get('translation', {}).get('cache_file', 'cache.json')
-        self.translate_list = translate_list
+    def __init__(self, config, trans_list):
+        self.enabled = config['translation']['enabled']
+        self.cache_path = config['translation']['cache_file']
+        self.trans_list = trans_list
+        self.translator = GoogleTranslator(source='auto', target=config['translation']['target_lang'])
         self.cache = self._load_cache()
-        self.translator = GoogleTranslator(source='auto', target=self.target)
 
     def _load_cache(self):
         if os.path.exists(self.cache_path):
-            with open(self.cache_path, 'r', encoding='utf-8') as f:
-                return json.load(f)
+            try:
+                with open(self.cache_path, 'r', encoding='utf-8') as f:
+                    return json.load(f)
+            except: return {}
         return {}
 
-    def save_cache(self):
-        with open(self.cache_path, 'w', encoding='utf-8') as f:
-            json.dump(self.cache, f, ensure_ascii=False, indent=2)
-
-    def translate(self, text, channel_id):
-        if not self.enabled or not text or channel_id not in self.translate_list:
+    def translate(self, text, ch_id):
+        if not self.enabled or not text or ch_id not in self.trans_list:
             return text
-        if text in self.cache:
-            return self.cache[text]
+        if text in self.cache: return self.cache[text]
         try:
             res = self.translator.translate(text)
             self.cache[text] = res
             return res
-        except:
-            return text
+        except: return text
 
-def run_merger():
+def run():
     config = load_config()
-    user_data = load_user_data()
-    target_ids = user_data.get('channels', [])
-    trans_ids = user_data.get('translate_channels', [])
+    user = load_user_data()
+    translator = EPGTranslator(config, user.get('translate_channels', []))
     
-    translator = EPGTranslator(config, trans_ids)
-    merged_root = ET.Element("tv")
-    
-    seen_channels = set()
-    seen_programs = set()
+    merged_root = ET.Element("tv", {"generator-info-name": "Technical-Karam-Singh-EPG"})
+    seen_ch, seen_prog = set(), set()
+    skip_ids = set(user.get('skip_channels', []))
 
-    for src in config['sources']:
+    for src in sorted(config['sources'], key=lambda x: x['priority']):
         if not src.get('active'): continue
-        print(f"Fetching: {src['name']}")
+        print(f"--- Fetching: {src['name']} ---")
         try:
             r = requests.get(src['url'], timeout=60)
             with gzip.GzipFile(fileobj=BytesIO(r.content)) as f:
                 root = ET.parse(f).getroot()
-
-                for channel in root.findall('channel'):
-                    cid = channel.get('id')
-                    if cid in target_ids and cid not in seen_channels:
-                        dn = channel.find('display-name')
+                for ch in root.findall('channel'):
+                    cid = ch.get('id')
+                    if cid not in skip_ids and cid not in seen_ch:
+                        dn = ch.find('display-name')
                         if dn is not None: dn.text = translator.translate(dn.text, cid)
-                        merged_root.append(channel)
-                        seen_channels.add(cid)
+                        merged_root.append(ch)
+                        seen_ch.add(cid)
 
-                for prog in root.findall('programme'):
-                    cid = prog.get('channel')
-                    start = prog.get('start')
-                    if cid in seen_channels and f"{cid}:{start}" not in seen_programs:
-                        # Time Offset Logic
-                        prog.set('start', shift_time(prog.get('start'), src.get('offset')))
-                        prog.set('stop', shift_time(prog.get('stop'), src.get('offset')))
-                        
-                        # Translation Logic
-                        title = prog.find('title')
-                        desc = prog.find('desc')
-                        if title is not None: title.text = translator.translate(title.text, cid)
-                        if desc is not None: desc.text = translator.translate(desc.text, cid)
-                        
-                        merged_root.append(prog)
-                        seen_programs.add(f"{cid}:{start}")
-        except Exception as e:
-            print(f"Source failed: {e}")
+                for pg in root.findall('programme'):
+                    cid = pg.get('channel')
+                    key = f"{cid}:{pg.get('start')}"
+                    if cid in seen_ch and key not in seen_prog:
+                        pg.set('start', shift_time(pg.get('start'), src.get('offset')))
+                        pg.set('stop', shift_time(pg.get('stop'), src.get('offset')))
+                        t, d = pg.find('title'), pg.find('desc')
+                        if t is not None: t.text = translator.translate(t.text, cid)
+                        if d is not None: d.text = translator.translate(d.text, cid)
+                        merged_root.append(pg)
+                        seen_prog.add(key)
+        except Exception as e: print(f"Error: {e}")
 
-    translator.save_cache()
+    with open(config['translation']['cache_file'], 'w', encoding='utf-8') as f:
+        json.dump(translator.cache, f, ensure_ascii=False, indent=2)
+    
     tree = ET.ElementTree(merged_root)
     ET.indent(tree, space="  ")
     tree.write(config['output_file'], encoding='utf-8', xml_declaration=True)
-    print(f"Final EPG created: {config['output_file']}")
 
 if __name__ == "__main__":
-    run_merger()
+    run()
