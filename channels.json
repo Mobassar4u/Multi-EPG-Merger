@@ -3,6 +3,11 @@
     "StarPlus.in",
     "Colors.in",
     "ZeeTV.in",
-    "SonyTV.in"
+    "SonyEntertainmentTV.in",
+    "DDChandana.in"
+  ],
+  "translate_channels": [
+    "DDChandana.in",
+    "Colors.in"
   ]
 }
