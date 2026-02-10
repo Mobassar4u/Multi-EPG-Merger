@@ -1,2 +1,2 @@
 # Indian TV EPG Programme Guide For IPTV Players
-Url Link- https://raw.githubusercontent.com/Mobassar4u/Multi-EPG-Merger/main/IN-TV.EPG.xml.gz
+Url Link- https://github.com/Mobassar4u/Multi-EPG-Merger/releases/download/latest/in.tv_epg.xml.gz
