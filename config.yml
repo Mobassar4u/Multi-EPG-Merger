@@ -1,0 +1,19 @@
+sources:
+  - name: "Primary_Source"
+    url: "https://example.com/source1.xml.gz"
+
+mapping:
+  "StarPlus.in": "Star-Plus" # Rename Source ID to your Unique ID
+
+# Channels you want to remove completely from the EPG
+filter:
+  - "Adult-Channel-ID"
+  - "Unwanted-ID"
+  - "Shop-TV"
+
+translation:
+  enabled: true
+  target_lang: "en"
+  cache_file: "epg_cache.json"
+
+output_file: "merged_epg.xml"
