@@ -1,1 +1,11 @@
+# Ignore the massive XML file
 in.tv_epg.xml
+
+# Keep the compressed version and cache
+!in.tv_epg.xml.gz
+!epg_cache.json
+
+# Python environment files
+__pycache__/
+*.pyc
+.env
