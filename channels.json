@@ -1,13 +1,10 @@
 {
   "translate_channels": [
-    "DDChandana.in",
     "DDTamil.in",
-    "SunTV.in",
-    "Colors.in"
+    "SunTV.in"
   ],
   "skip_channels": [
     "Adult-Channel-ID",
-    "Unwanted-ID",
     "Marketing-1"
   ]
 }
