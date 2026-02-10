@@ -45,4 +45,4 @@ translation:
   target_lang: "en"
   cache_file: "epg_cache.json"
 
-output_file: "merged_epg.xml"
+output_file: "in.tv_epg.xml"
