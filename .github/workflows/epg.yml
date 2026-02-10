@@ -2,8 +2,12 @@ name: Update Indian EPG
 
 on:
   schedule:
-    - cron: '0 0 * * *' # Runs daily at midnight
-  workflow_dispatch: # Allows you to run it manually for testing
+    - cron: '0 0 * * *' # Runs every 24 hours
+  workflow_dispatch: # Allows manual run
+
+# REQUIRED: Gives the Action permission to write to your repo
+permissions:
+  contents: write
 
 jobs:
   build:
@@ -20,15 +24,15 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install requests pyyaml
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
 
       - name: Run EPG Merger
         run: python main.py
 
-      - name: Commit and Push
-        run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
-          git add merged_epg.xml
-          git commit -m "Update EPG: $(date)" || echo "No changes to commit"
-          git push
+      # NEW STEP: Automatically saves the changes
+      - name: Commit and Push changes
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "Automated EPG Update: $(date)"
+          file_pattern: 'merged_epg.xml epg_cache.json' # Save both files
