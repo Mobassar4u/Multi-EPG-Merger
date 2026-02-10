@@ -31,7 +31,7 @@ jobs:
         with:
           # This line pulls the 'total' variable from the epg_script step
           commit_message: "EPG Update: ${{ steps.epg_script.outputs.total }} channels"
-          file_pattern: 'merged_epg.xml merged_epg.xml.gz epg_cache.json'
+          file_pattern: 'in.tv_epg.xml in.tv_epg.xml.gz epg_cache.json'
 
       - name: Create Release
         uses: softprops/action-gh-release@v2
@@ -39,6 +39,6 @@ jobs:
           tag_name: latest
           name: "Latest Indian EPG Update"
           body: "Total Channels: ${{ steps.epg_script.outputs.total }}\nDate: "
-          files: merged_epg.xml.gz
+          files: in.tv_epg.xml.gz
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
