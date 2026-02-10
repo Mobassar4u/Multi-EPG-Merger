@@ -1,4 +1,4 @@
-name: Update Indian EPG
+name: Indian TV EPG Updater
 
 on:
   schedule:
