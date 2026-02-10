@@ -7,19 +7,19 @@ sources:
     url: "https://www.open-epg.com/files/india2.xml.gz"
     active: true
     priority: 2
-    - name: "Open EPG"
+  - name: "Open EPG"
     url: "https://www.open-epg.com/files/india1.xml.gz"
     active: true
     priority: 3
-    - name: "Open EPG"
+  - name: "Open EPG"
     url: "https://www.open-epg.com/files/india5.xml.gz"
     active: true
     priority: 4
-    - name: "Open EPG"
+  - name: "Open EPG"
     url: "https://www.open-epg.com/files/india4.xml.gz"
     active: true
     priority: 5
-    - name: "Open EPG"
+  - name: "Open EPG"
     url: "https://www.open-epg.com/files/india6.xml.gz"
     active: true
     priority: 6
