@@ -2,7 +2,7 @@ name: EPG Updater
 
 on:
   schedule:
-    - cron: '30 21 * * *' # 03:00 AM IST
+    - cron: '30 21 * * *' # Exactly 03:00 AM IST
   workflow_dispatch:
 
 permissions:
@@ -19,7 +19,7 @@ jobs:
           python-version: '3.9'
 
       - name: Install Dependencies
-        run: pip install -r requirements.txt deep_translator PyYAML requests
+        run: pip install requests PyYAML deep_translator
 
       - name: Run Script
         id: epg_script
@@ -36,7 +36,7 @@ jobs:
         with:
           tag_name: latest
           name: "Latest Indian EPG Update"
-          body: "Total Channels: ${{ steps.epg_script.outputs.total }}\nUpdated: ${{ github.event.head_commit.timestamp }}"
+          body: "Total Channels: ${{ steps.epg_script.outputs.total }}\nDate: ${{ github.event.head_commit.timestamp }}"
           files: in.tv_epg.xml.gz
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -44,7 +44,7 @@ jobs:
       - name: Delete Old Releases
         uses: dev-drprasad/delete-older-releases@v0.3.3
         with:
-          keep_latest: 3
+          keep_latest: 3 # Only keep the 3 most recent updates
           delete_tags: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
