@@ -14,7 +14,7 @@ def run():
     root = ET.Element("tv", {"generator-info-name": "Technical-Karam-Singh"})
     seen_ch, seen_pg, skip = set(), set(), set(user.get('skip_channels', []))
 
-    # Priority-based merging from your config.yml
+    # Logic to merge from multiple sources based on priority
     for s in sorted(cfg['sources'], key=lambda x: x['priority']):
         if not s['active']: continue
         try:
@@ -41,7 +41,8 @@ def run():
     with open(trans.cache_path, 'w', encoding='utf-8') as f: 
         json.dump(trans.cache, f, indent=2)
     
-    # --- STORAGE FIX: Direct write to Gzip ---
+    # --- NO .XML FILE SYSTEM ---
+    # Stream the XML object directly into a Gzip compressed file
     tree = ET.ElementTree(root)
     ET.indent(tree)
     with gzip.open('in.tv_epg.xml.gz', 'wb') as f_out:
