@@ -1,42 +1,43 @@
-name: Indian TV EPG Updater
+name: EPG Updater
 
 on:
   schedule:
-    # Runs every day at 00:00 UTC (05:30 AM IST)
     - cron: '0 0 * * *'
-  # Allows you to manually trigger the update from the "Actions" tab
   workflow_dispatch:
 
-# Grant write permissions so the Action can push files back to your repo
 permissions:
   contents: write
 
 jobs:
-  build:
+  run:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Set up Python 3.9
-        uses: actions/setup-python@v4
+      - uses: actions/setup-python@v4
         with:
           python-version: '3.9'
 
       - name: Install Dependencies
-        run: |
-          python -m pip install --upgrade pip
-          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+        run: pip install -r requirements.txt
 
-      - name: Run EPG Merger and Compressor
+      - name: Run Script
+        id: epg_script  # ID used to reference outputs
         run: python main.py
 
-      - name: Commit and Push Changes
+      - name: Commit Changes
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          commit_message: "Automated EPG Update: $(date)"
-          # We save the raw XML, the GZ version, and the translation cache
+          # This line pulls the 'total' variable from the epg_script step
+          commit_message: "EPG Update: ${{ steps.epg_script.outputs.total }} channels updated"
           file_pattern: 'merged_epg.xml merged_epg.xml.gz epg_cache.json'
-          repository: .
-          status_options: '--untracked-files=normal'
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: latest
+          name: "Latest Indian EPG Update"
+          body: "Total Channels: ${{ steps.epg_script.outputs.total }}\nDate: $(date)"
+          files: merged_epg.xml.gz
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
