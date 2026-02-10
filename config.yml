@@ -1,3 +1,4 @@
+# EPG Configuration for Indian Channels
 sources:
   - name: "Open EPG"
     url: "https://www.open-epg.com/files/india3.xml.gz"
@@ -26,6 +27,7 @@ sources:
 
 mapping:
   "StarPlus.in": "Star-Plus"
+  "Colors.in": "Colors-TV"
 
 # Channels you want to remove completely from the EPG
 filter:
