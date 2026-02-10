@@ -1,107 +1,69 @@
 import requests
 import gzip
-import yaml
 import json
-import os
+import yaml
 import xml.etree.ElementTree as ET
 from io import BytesIO
-from deep_translator import GoogleTranslator
 
-def load_config(path='config.yml'):
-    with open(path, 'r', encoding='utf-8') as f:
+def load_config():
+    with open('config.yml', 'r') as f:
         return yaml.safe_load(f)
 
-def load_cache(path):
-    if os.path.exists(path):
-        with open(path, 'r', encoding='utf-8') as f:
-            return json.load(f)
-    return {}
+def load_user_channels():
+    with open('channels.json', 'r') as f:
+        return json.load(f)['channels']
 
-def save_cache(path, data):
-    with open(path, 'w', encoding='utf-8') as f:
-        json.dump(data, f, ensure_ascii=False, indent=4)
-
-def fetch_gz_xml(url):
-    print(f"Fetching: {url}")
-    try:
-        r = requests.get(url, timeout=30)
-        r.raise_for_status()
-        with gzip.GzipFile(fileobj=BytesIO(r.content)) as gz:
-            return ET.fromstring(gz.read())
-    except Exception as e:
-        print(f"Error: {e}")
-        return None
-
-def translate(text, target, cache):
-    if not text or len(text.strip()) < 2: return text
-    if text in cache: return cache[text]
-    try:
-        result = GoogleTranslator(source='auto', target=target).translate(text)
-        cache[text] = result
-        return result
-    except:
-        return text
-
-def run():
-    cfg = load_config()
-    cache = load_cache(cfg['translation']['cache_file'])
-    mapping = cfg.get('mapping', {})
-    filter_list = cfg.get('filter', [])
+def fetch_and_merge():
+    config = load_config()
+    target_channels = load_user_channels()
     
-    new_root = ET.Element("tv")
-    seen_ids = set()
-    channels, items = [], []
+    # Root for the new XMLTV file
+    merged_root = ET.Element("tv")
+    merged_root.set("generator-info-name", "Gemini EPG Merger")
 
-    for src in cfg['sources']:
-        root = fetch_gz_xml(src['url'])
-        if root is None: continue
+    processed_channels = set()
+    processed_programmes = set()
 
-        # Process Channels
-        for ch in root.findall('channel'):
-            orig_id = ch.get('id')
-            if orig_id in filter_list: continue # Skip filtered channels
+    # Sort sources by priority (1 is highest)
+    sources = sorted(config['sources'], key=lambda x: x['priority'])
+
+    for source in sources:
+        if not source['active']:
+            continue
             
-            tid = mapping.get(orig_id, orig_id)
-            if tid not in seen_ids:
-                ch.set('id', tid)
-                if cfg['translation']['enabled']:
-                    name = ch.find('display-name')
-                    if name is not None:
-                        name.text = translate(name.text, cfg['translation']['target_lang'], cache)
-                seen_ids.add(tid)
-                channels.append(ch)
+        print(f"Downloading: {source['name']} ({source['url']})")
+        try:
+            response = requests.get(source['url'], timeout=30)
+            with gzip.GzipFile(fileobj=BytesIO(response.content)) as f:
+                tree = ET.parse(f)
+                root = tree.getroot()
 
-        # Process Programmes
-        for prog in root.findall('programme'):
-            orig_ch_id = prog.get('channel')
-            if orig_ch_id in filter_list: continue # Skip filtered programmes
-            
-            tid = mapping.get(orig_ch_id, orig_ch_id)
-            prog.set('channel', tid)
-            
-            if cfg['translation']['enabled']:
-                for tag in ['title', 'desc']:
-                    el = prog.find(tag)
-                    if el is not None and el.get('lang') != 'en':
-                        el.text = translate(el.text, cfg['translation']['target_lang'], cache)
-                        el.set('lang', 'en')
-            items.append(prog)
+                # 1. Process Channels
+                for channel in root.findall('channel'):
+                    ch_id = channel.get('id')
+                    if ch_id in target_channels and ch_id not in processed_channels:
+                        merged_root.append(channel)
+                        processed_channels.add(ch_id)
 
-    new_root.extend(channels)
-    new_root.extend(items)
-    
-    # Save standard XML
-    tree = ET.ElementTree(new_root)
-    ET.indent(tree, space="  ")
-    tree.write(cfg['output_file'], encoding='utf-8', xml_declaration=True)
-    
-    # Save Compressed GZ
-    with open(cfg['output_file'], 'rb') as f_in:
-        with gzip.open(f"{cfg['output_file']}.gz", 'wb') as f_out:
-            f_out.writelines(f_in)
+                # 2. Process Programmes
+                for prog in root.findall('programme'):
+                    ch_id = prog.get('channel')
+                    start = prog.get('start')
+                    # Create a unique key for the show to avoid duplicates
+                    prog_key = f"{ch_id}-{start}" 
+                    
+                    if ch_id in processed_channels and prog_key not in processed_programmes:
+                        merged_root.append(prog)
+                        processed_programmes.add(prog_key)
 
-    save_cache(cfg['translation']['cache_file'], cache)
-    print(f"Done! Created {cfg['output_file']} and {cfg['output_file']}.gz")
+        except Exception as e:
+            print(f"Error processing {source['url']}: {e}")
+
+    # Write the final file
+    tree = ET.ElementTree(merged_root)
+    output_path = config.get('output_file', 'merged_epg.xml')
+    tree.write(output_path, encoding='utf-8', xml_declaration=True)
+    print(f"\nSuccess! Merged EPG saved to: {output_path}")
 
 if __name__ == "__main__":
-    run()
+    fetch_and_merge()
