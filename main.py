@@ -48,15 +48,9 @@ class EPGTranslator:
             except: return {}
         return {}
 
-    def translate(self, text, ch_id):
-        if not self.enabled or not text or ch_id not in self.trans_list:
-            return text
-        if text in self.cache: return self.cache[text]
-        try:
-            res = self.translator.translate(text)
-            self.cache[text] = res
-            return res
-        except: return text
+    def save_cache(self):
+        with open(self.cache_path, 'w', encoding='utf-8') as f:
+            json.dump(self.cache, f, ensure_ascii=False, indent=2)
 
 def run():
     config = load_config()
@@ -69,7 +63,7 @@ def run():
 
     for src in sorted(config['sources'], key=lambda x: x['priority']):
         if not src.get('active'): continue
-        print(f"--- Fetching: {src['name']} ---")
+        print(f"Processing: {src['name']}")
         try:
             r = requests.get(src['url'], timeout=60)
             with gzip.GzipFile(fileobj=BytesIO(r.content)) as f:
@@ -95,12 +89,23 @@ def run():
                         seen_prog.add(key)
         except Exception as e: print(f"Error: {e}")
 
-    with open(config['translation']['cache_file'], 'w', encoding='utf-8') as f:
-        json.dump(translator.cache, f, ensure_ascii=False, indent=2)
+    translator.save_cache()
     
+    # Generate the XML string
     tree = ET.ElementTree(merged_root)
     ET.indent(tree, space="  ")
-    tree.write(config['output_file'], encoding='utf-8', xml_declaration=True)
+    
+    # Step 1: Save regular XML (Optional, for debugging)
+    output_xml = config['output_file'] # "merged_epg.xml"
+    tree.write(output_xml, encoding='utf-8', xml_declaration=True)
+    
+    # Step 2: Create the GZ compressed file
+    output_gz = output_xml + ".gz" # "merged_epg.xml.gz"
+    with open(output_xml, 'rb') as f_in:
+        with gzip.open(output_gz, 'wb') as f_out:
+            f_out.writelines(f_in)
+            
+    print(f"Successfully created: {output_gz}")
 
 if __name__ == "__main__":
     run()
