@@ -1,13 +1,14 @@
 {
-  "channels": [
-    "StarPlus.in",
-    "Colors.in",
-    "ZeeTV.in",
-    "SonyEntertainmentTV.in",
-    "DDChandana.in"
-  ],
   "translate_channels": [
     "DDChandana.in",
+    "DDTamil.in",
+    "SunTV.in",
     "Colors.in"
+  ],
+  "skip_channels": [
+    "Adult-Channel-ID",
+    "Unwanted-ID",
+    "Shop-TV",
+    "Marketing-1"
   ]
 }
