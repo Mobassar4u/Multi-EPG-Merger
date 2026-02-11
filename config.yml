@@ -35,6 +35,11 @@ sources:
     priority: 7
     offset: "+0530"
   - name: "Epg Share"
+    url: "https://epgshare01.online/epgshare01/epg_ripper_IN2.xml.gz"
+    active: true
+    priority: 9
+    offset: "+0530"
+  - name: "Epg Share"
     url: "https://epgshare01.online/epgshare01/epg_ripper_IN4.xml.gz"
     active: true
     priority: 8
