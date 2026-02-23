@@ -1,9 +1,21 @@
 {
   "translate_channels": [
     "YRF.Music.in",
-    "MN+ HD.in"
+    "9X.Jalwa.in",
+    "TV9.Bharatvarsh.in",
+    "Good.News.Today.in"
   ],
   "skip_channels": [
+    "Active Services Duplicate.in",
+    "Active Services Duplicate1.in",
+    "Active Services Duplicate2.in",
+    "Active Services Duplicate3.in",
+    "Active Services Duplicate4.in",
+    "Active Services Duplicate4.in",
+    "Active Services.in",
+    "Ayushmaan Active.in",
+    "Ayushmaan Active",
+    "BHAKTI ACTIVE",
     "Adult-Channel-ID",
     "Marketing-1"
   ]
